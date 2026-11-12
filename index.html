@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#08080a">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Entrar com Roblox · Nome do App</title>
+  <meta name="description" content="Entre com sua conta Roblox de forma segura usando OAuth 2.0. Você escolhe o que compartilhar e nós nunca vemos sua senha.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Fundo decorativo -->
+  <div class="bg" aria-hidden="true">
+    <span class="orb orb--a"></span>
+    <span class="orb orb--b"></span>
+    <span class="grid"></span>
+  </div>
+
+  <!-- ============ CABEÇALHO ============ -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#topo" aria-label="Nome do App – início">
+        <!--
+          LOGO (pequena, cabeçalho): troque o <span class="logo-placeholder"> por
+          <img src="logo.png" alt="Nome do App">
+          A caixa se ajusta sozinha (veja --logo-size-sm no style.css).
+        -->
+        <span class="logo-slot logo-slot--sm">
+          <span class="logo-placeholder">LOGO</span>
+        </span>
+        <span class="brand-name">Nome do App</span>
+      </a>
+
+      <nav class="nav" aria-label="Seções da página">
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#permissoes">Permissões</a>
+        <a href="#seguranca">Segurança</a>
+        <a href="#faq">Dúvidas</a>
+      </nav>
+
+      <a class="btn btn--ghost btn--sm" href="#entrar" data-login>Entrar</a>
+    </div>
+  </header>
+
+  <main id="topo">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero container">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="dot"></span> Login seguro com OAuth 2.0</span>
+        <h1>Entre com a sua <span class="grad">conta Roblox</span></h1>
+        <p class="lead">
+          Autorize o <strong>Nome do App</strong> em poucos cliques. Você faz login direto no Roblox,
+          escolhe o que compartilhar e pode revogar o acesso quando quiser.
+        </p>
+
+        <ul class="trust">
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.2 8 8 9 4.8-1 8-4.5 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+            Nunca vemos sua senha
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 4.5-5"/></svg>
+            Você aprova cada permissão
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+            Revogue quando quiser
+          </li>
+        </ul>
+      </div>
+
+      <!-- Cartão de login -->
+      <aside class="auth-card" id="entrar" aria-labelledby="auth-title">
+        <!--
+          LOGO (grande, cartão): troque o <span class="logo-placeholder"> por
+          <img src="logo.png" alt="Nome do App">
+        -->
+        <div class="logo-slot logo-slot--lg">
+          <span class="logo-placeholder">SUA<br>LOGO</span>
+        </div>
+
+        <h2 id="auth-title">Bem-vindo(a)</h2>
+        <p class="auth-sub">Use sua conta Roblox para continuar no Nome do App.</p>
+
+        <!-- Mensagens de erro (config ausente ou erro vindo do Roblox) -->
+        <div class="alert" id="alert" role="alert" hidden></div>
+        <noscript><div class="alert">Ative o JavaScript do navegador para entrar com Roblox.</div></noscript>
+
+        <a class="btn btn--primary btn--lg btn--block" id="login" href="#entrar" data-login>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="m10 17 5-5-5-5"/><path d="M15 12H4"/></svg>
+          <span class="btn-label">Entrar com Roblox</span>
+        </a>
+
+        <p class="fineprint">Você será levado ao Roblox para fazer login e autorizar o acesso.</p>
+
+        <div class="divider"><span>Este app poderá acessar</span></div>
+
+        <!-- A lista abaixo é gerada a partir de CONFIG.SCOPES (veja o script no final). -->
+        <ul class="scopes" id="scope-list">
+          <li>
+            <span class="scope-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></span>
+            <span><strong>Identificar você</strong><small>Seu ID de usuário do Roblox</small></span>
+          </li>
+          <li>
+            <span class="scope-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="11" r="2"/><path d="M14 10h4M14 14h4M6.5 16c.6-1.2 1.4-1.8 2.5-1.8s1.9.6 2.5 1.8"/></svg></span>
+            <span><strong>Seu perfil público</strong><small>Nome de exibição, usuário, avatar e link do perfil</small></span>
+          </li>
+        </ul>
+
+        <p class="age-note">Requer conta Roblox de usuário com 13 anos ou mais.</p>
+        <p class="legal">
+          Ao continuar, você concorda com os <a href="https://seusite.com/termos">Termos de Serviço</a>
+          e a <a href="https://seusite.com/privacidade">Política de Privacidade</a>.
+        </p>
+      </aside>
+    </section>
+
+    <!-- ============ COMO FUNCIONA ============ -->
+    <section class="section container" id="como-funciona" aria-labelledby="h-como">
+      <header class="section-head">
+        <span class="kicker">Passo a passo</span>
+        <h2 id="h-como">Como funciona o login</h2>
+        <p>O Roblox cuida da autenticação e da autorização. Seu acesso segue o fluxo padrão OAuth 2.0 com PKCE.</p>
+      </header>
+
+      <ol class="steps">
+        <li class="step">
+          <span class="step-num">1</span>
+          <h3>Clique em entrar</h3>
+          <p>Você é redirecionado para a página oficial de autorização do Roblox.</p>
+        </li>
+        <li class="step">
+          <span class="step-num">2</span>
+          <h3>Confirme sua identidade</h3>
+          <p>Faça login na sua conta Roblox, direto no Roblox. Sua senha nunca passa por aqui.</p>
+        </li>
+        <li class="step">
+          <span class="step-num">3</span>
+          <h3>Aprove as permissões</h3>
+          <p>Veja exatamente o que o app pediu e autorize só se estiver de acordo.</p>
+        </li>
+        <li class="step">
+          <span class="step-num">4</span>
+          <h3>Volte para o app</h3>
+          <p>O Roblox te traz de volta com um código de uso único, e seu login é concluído.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============ PERMISSÕES ============ -->
+    <section class="section container" id="permissoes" aria-labelledby="h-perm">
+      <header class="section-head">
+        <span class="kicker">Transparência</span>
+        <h2 id="h-perm">O que compartilhamos com o app</h2>
+        <p>O app só recebe o que você autoriza na tela de consentimento do Roblox.</p>
+      </header>
+
+      <div class="cards cards--2">
+        <article class="card">
+          <h3><span class="pill">openid</span> Identidade</h3>
+          <p>Permite confirmar quem você é e receber seu <strong>ID de usuário</strong> do Roblox, que é o identificador único e estável da sua conta.</p>
+        </article>
+        <article class="card">
+          <h3><span class="pill">profile</span> Perfil</h3>
+          <p>Libera informações públicas do perfil: <strong>nome de exibição</strong>, <strong>nome de usuário</strong>, <strong>data de criação da conta</strong>, <strong>link do perfil</strong> e <strong>foto do avatar</strong>.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ SEGURANÇA ============ -->
+    <section class="section container" id="seguranca" aria-labelledby="h-seg">
+      <header class="section-head">
+        <span class="kicker">Segurança</span>
+        <h2 id="h-seg">Feito para proteger sua conta</h2>
+      </header>
+
+      <div class="cards cards--3">
+        <article class="card">
+          <span class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
+          <h3>Sem compartilhar senha</h3>
+          <p>Você autentica no Roblox. O app recebe apenas tokens de acesso, nunca suas credenciais.</p>
+        </article>
+        <article class="card">
+          <span class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.2 8 8 9 4.8-1 8-4.5 8-9V6l-8-3Z"/><path d="M12 8v5"/><circle cx="12" cy="16" r=".6"/></svg></span>
+          <h3>PKCE e proteção CSRF</h3>
+          <p>Cada login usa um código de verificação único (PKCE com SHA-256) e um valor <code>state</code> para evitar requisições forjadas.</p>
+        </article>
+        <article class="card">
+          <span class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+          <h3>Acesso temporário</h3>
+          <p>Os tokens de acesso expiram em 15 minutos e o código de autorização vale por apenas 1 minuto e um único uso.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section container" id="faq" aria-labelledby="h-faq">
+      <header class="section-head">
+        <span class="kicker">Dúvidas frequentes</span>
+        <h2 id="h-faq">Perguntas rápidas</h2>
+      </header>
+
+      <div class="faq">
+        <details>
+          <summary>O app consegue ver minha senha do Roblox?</summary>
+          <p>Não. O login acontece na página do próprio Roblox. O OAuth 2.0 existe justamente para conceder acesso sem entregar suas credenciais a terceiros.</p>
+        </details>
+        <details>
+          <summary>Posso retirar a autorização depois?</summary>
+          <p>Sim. Quando você revoga a autorização, os tokens emitidos para o app deixam de funcionar.</p>
+        </details>
+        <details>
+          <summary>Por que o Roblox pede para eu aprovar permissões?</summary>
+          <p>Para que você veja e controle exatamente o que o app poderá acessar antes de qualquer coisa ser compartilhada.</p>
+        </details>
+        <details>
+          <summary>Quem pode entrar?</summary>
+          <p>É necessário ter uma conta Roblox com 13 anos ou mais para autorizar apps que usam OAuth 2.0.</p>
+        </details>
+        <details>
+          <summary>Apareceu um erro ao entrar. E agora?</summary>
+          <p>Volte para esta página e tente novamente. Se o problema continuar, fale com o suporte do app.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ RODAPÉ ============ -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-links">
+        <a href="https://seusite.com/termos">Termos de Serviço</a>
+        <a href="https://seusite.com/privacidade">Privacidade</a>
+        <a href="https://seusite.com/suporte">Suporte</a>
+      </div>
+      <p class="footer-copy">© <span id="year">2026</span> Nome do App. Todos os direitos reservados.</p>
+      <p class="footer-disclaimer">
+        Este aplicativo é independente e não é afiliado, patrocinado nem endossado pela Roblox Corporation.
+        Roblox é marca registrada da Roblox Corporation.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ============ LÓGICA DO LOGIN (OAuth 2.0 + PKCE) ============ -->
+  <script>
+    /* ------------------------------------------------------------------
+       CONFIGURAÇÃO — edite só este bloco.
+       Os valores vêm do Creator Dashboard › OAuth 2.0 Apps.
+       NUNCA coloque o client secret aqui: esta página usa PKCE e
+       é pública. O secret fica somente no seu servidor.
+    ------------------------------------------------------------------ */
+    const CONFIG = {
+      CLIENT_ID:    "SEU_CLIENT_ID",
+      REDIRECT_URI: "https://seusite.com/callback", // igual a uma das Redirect URLs cadastradas
+      SCOPES:       ["openid", "profile"],           // somente os escopos habilitados no app
+      PROMPT:       ""                               // opcional: "login" | "consent" | "select_account" | "none"
+    };
+
+    const AUTHORIZE_URL = "https://apis.roblox.com/oauth/v1/authorize";
+
+    /* Textos da lista de permissões (por escopo). Escopos sem texto aqui
+       aparecem com uma descrição genérica. */
+    const SCOPE_INFO = {
+      openid:  { title: "Identificar você",   desc: "Seu ID de usuário do Roblox" },
+      profile: { title: "Seu perfil público", desc: "Nome de exibição, usuário, avatar e link do perfil" }
+    };
+
+    /* ---------- utilidades PKCE ---------- */
+    function base64url(bytes) {
+      let bin = "";
+      new Uint8Array(bytes).forEach(function (b) { bin += String.fromCharCode(b); });
+      return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+    }
+    function randomString(byteLength) {
+      const a = new Uint8Array(byteLength);
+      crypto.getRandomValues(a);
+      return base64url(a);                // 32 bytes → 43 caracteres (mínimo exigido: 43)
+    }
+    async function sha256(text) {
+      return crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+    }
+
+    /* ---------- interface ---------- */
+    const alertBox = document.getElementById("alert");
+    function showAlert(msg) {
+      alertBox.textContent = msg;         // textContent: nunca interpreta HTML
+      alertBox.hidden = false;
+    }
+
+    function renderScopes() {
+      const list = document.getElementById("scope-list");
+      if (!list || !CONFIG.SCOPES.length) return;
+      list.textContent = "";
+      CONFIG.SCOPES.forEach(function (scope) {
+        const info = SCOPE_INFO[scope] || { title: "Permissão: " + scope, desc: "Acesso solicitado pelo app" };
+        const li = document.createElement("li");
+        const ico = document.createElement("span");
+        ico.className = "scope-ico";
+        ico.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
+        const txt = document.createElement("span");
+        const strong = document.createElement("strong");
+        const small = document.createElement("small");
+        strong.textContent = info.title;
+        small.textContent = info.desc;
+        txt.append(strong, small);
+        li.append(ico, txt);
+        list.append(li);
+      });
+    }
+
+    function isConfigured() {
+      return CONFIG.CLIENT_ID && CONFIG.CLIENT_ID !== "SEU_CLIENT_ID" &&
+             CONFIG.REDIRECT_URI && CONFIG.REDIRECT_URI.indexOf("seusite.com") === -1;
+    }
+
+    /* ---------- fluxo de autorização ---------- */
+    let starting = false;
+    async function startLogin(event) {
+      event.preventDefault();
+      if (starting) return;
+
+      if (!isConfigured()) {
+        showAlert("Configure CLIENT_ID e REDIRECT_URI no bloco CONFIG do index.html.");
+        document.getElementById("entrar").scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+      if (!window.crypto || !crypto.subtle) {
+        showAlert("Seu navegador não suporta login seguro nesta página. Acesse por HTTPS.");
+        return;
+      }
+
+      starting = true;
+      const btn = document.getElementById("login");
+      btn.setAttribute("aria-busy", "true");
+      btn.classList.add("is-loading");
+      btn.querySelector(".btn-label").textContent = "Redirecionando…";
+
+      try {
+        const state         = randomString(16);   // proteção CSRF
+        const nonce         = randomString(16);   // vincula o ID token a este pedido
+        const codeVerifier  = randomString(32);   // PKCE
+        const codeChallenge = base64url(await sha256(codeVerifier));
+
+        // Guardados para a página de callback conferir state e trocar o código por tokens.
+        // (sessionStorage só é visível na mesma origem — veja as observações da entrega.)
+        try {
+          sessionStorage.setItem("oauth_state", state);
+          sessionStorage.setItem("oauth_nonce", nonce);
+          sessionStorage.setItem("oauth_code_verifier", codeVerifier);
+        } catch (e) { /* armazenamento bloqueado: o servidor precisará tratar */ }
+
+        const params = [
+          ["client_id",             CONFIG.CLIENT_ID],
+          ["redirect_uri",          CONFIG.REDIRECT_URI],
+          ["scope",                 CONFIG.SCOPES.join(" ")],
+          ["response_type",         "code"],
+          ["state",                 state],
+          ["nonce",                 nonce],
+          ["code_challenge",        codeChallenge],
+          ["code_challenge_method", "S256"]
+        ];
+        if (CONFIG.PROMPT) params.push(["prompt", CONFIG.PROMPT]);
+
+        // encodeURIComponent gera %20 nos espaços do scope, como no exemplo da documentação.
+        const query = params.map(function (p) {
+          return encodeURIComponent(p[0]) + "=" + encodeURIComponent(p[1]);
+        }).join("&");
+
+        window.location.assign(AUTHORIZE_URL + "?" + query);
+      } catch (err) {
+        starting = false;
+        btn.removeAttribute("aria-busy");
+        btn.classList.remove("is-loading");
+        btn.querySelector(".btn-label").textContent = "Entrar com Roblox";
+        showAlert("Não foi possível iniciar o login. Tente novamente.");
+      }
+    }
+
+    /* Se o Roblox devolver o usuário a esta página com erro (?error=...), mostra o aviso. */
+    function showReturnedError() {
+      const q = new URLSearchParams(window.location.search);
+      const err = q.get("error");
+      if (!err) return;
+      const messages = {
+        access_denied: "Você cancelou a autorização. Se foi sem querer, é só tentar de novo.",
+        invalid_request: "O pedido de login é inválido. Tente novamente.",
+        invalid_scope: "O app pediu uma permissão não disponível. Fale com o suporte.",
+        server_error: "O Roblox teve um problema agora. Tente novamente em instantes."
+      };
+      showAlert(messages[err] || "Não foi possível concluir o login. Tente novamente.");
+    }
+
+    document.querySelectorAll("[data-login]").forEach(function (el) {
+      el.addEventListener("click", startLogin);
+    });
+    document.getElementById("year").textContent = new Date().getFullYear();
+    renderScopes();
+    showReturnedError();
+  </script>
+</body>
+</html>
